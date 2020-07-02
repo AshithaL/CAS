@@ -66,8 +66,9 @@ def run_cmd(args_list):
 
 def job():
     try:
-        cmd = ['hdfs', 'dfs', '-copyFromLocal', '/home/nineleaps/CAS/src/Data/data{}.csv'.format(date),
-               '/user/covid_data_2020-06-30.csv']
+        date1 = datetime.datetime.today().strftime('%Y-%m-%d')
+        cmd = ['hdfs', 'dfs', '-copyFromLocal', '/home/nineleaps/CAS/src/Data/data{}.csv'.format(date1),
+               '/user/covid_data_2020-07-01.csv']
         print(cmd)
         (ret, out, err) = run_cmd(cmd)
         print(ret, out, err)
@@ -102,6 +103,6 @@ def sqoop_job():
      except requests.exceptions.RequestException as e:
          logging.critical('Critical error occurred during request')
          raise SystemExit(e)
-
+fetch_covid_state_data()
 job()
 sqoop_job()

@@ -3,10 +3,13 @@ from datetime import timedelta
 import airflow
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
+from airflow.operators.python_operator import PythonOperator
+
+from src import connect as c
 
 default_args = {
     'owner': 'airflow',
-    'start_date': datetime.datetime(2020, 5, 30),
+    'start_date': datetime.datetime(2020, 2, 7),
     # 'end_date': datetime(2018, 12, 30),
     'depends_on_past': False,
     # 'email': ['airflow@example.com'],
@@ -23,34 +26,15 @@ dag = DAG(dag_id='CAS',
           schedule_interval=timedelta(days=1),
           )
 # t1, t2 and t3 are examples of tasks created by instantiating operators
-t1 = BashOperator(
-    task_id='print_date',
-    bash_command='date',
-    dag=dag,
-)
 
-t2 = BashOperator(
-    task_id='sleep',
-    depends_on_past=False,
-    bash_command='sleep 5',
-    dag=dag,
-)
+t1 = PythonOperator(task_id="fetch_data", python_callable=c.fetch_covid_state_data, dag=dag)
 
-templated_command = """
-{% for i in range(5) %}
-    echo "{{ ds }}"
-    echo "{{ macros.ds_add(ds, 7)}}"
-    echo "{{ params.my_param }}"
-{% endfor %}
-"""
+t2 = PythonOperator(task_id="Dump_data_hdfs", python_callable=c.job(), dag=dag)
 
-t3 = BashOperator(
-    task_id='templated',
-    depends_on_past=False,
-    bash_command=templated_command,
-    params={'my_param': 'Parameter I passed in'},
-    dag=dag,
-)
+t3 = PythonOperator(task_id="Dump_to_mysql", python_callable=c.sqoop_job(), dag=dag)
 
-t1 >> [t2, t3]
+
+
+
+t1 >> t2 >> t3
 
