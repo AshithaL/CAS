@@ -31,7 +31,7 @@ def fetch_covid_state_data():
         data = json.loads(url_data)
         covid_data = []
         for state in data:
-            covid_data.append([datetime.date, state.get('state'), state.get('active')])
+            covid_data.append([date, state.get('state'), state.get('active')])
         with open(file_name, "w") as f:
             writer = csv.writer(f)
             writer.writerows(covid_data)
@@ -66,9 +66,8 @@ def run_cmd(args_list):
 
 def job():
     try:
-        date1 = datetime.datetime.today().strftime('%Y-%m-%d')
-        cmd = ['hdfs', 'dfs', '-copyFromLocal', '/home/nineleaps/CAS/src/Data/data{}.csv'.format(date1),
-               '/user/covid_data_2020-07-01.csv']
+        cmd = ['hdfs', 'dfs', '-copyFromLocal', '/home/nineleaps/CAS/src/Data/data{}.csv'.format(date),
+               '/user/covid_data_2020-07-02.csv']
         print(cmd)
         (ret, out, err) = run_cmd(cmd)
         print(ret, out, err)
