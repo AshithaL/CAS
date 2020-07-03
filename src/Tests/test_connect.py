@@ -11,7 +11,7 @@ class Test(TestCase):
     @mock.patch('src.connect.fetch_covid_state_data')
     def test_fetch_covid_data_timeout(self, fetch_covid_state_data):
         fetch_covid_state_data.return_value = "Connection time out"
-        self.assertEqual(fetch_covid_state_data(), "Connection time out")
+        self.assertFalse(fetch_covid_state_data(), "Connection time out")
 
     @mock.patch('src.connect.fetch_covid_state_data')
     def test_fetch_covid_data_redirects(self, fetch_covid_state_data):
@@ -41,26 +41,26 @@ class Test(TestCase):
     @mock.patch('src.connect.hdfs_job')
     def test_hdfs_job_critical(self, sqoop_job):
         sqoop_job.return_value = "Critical error occurred during request"
-        self.assertEqual(sqoop_job(), "Critical error occurred during request.")
+        self.assertEqual(sqoop_job(), "Critical error occurred during request")
 
     @mock.patch('src.connect.sqoop_job')
-    def test_hdfs_job_critical(self, sqoop_job):
+    def test_scoop_job(self, sqoop_job):
         sqoop_job.return_value = "sucessfully dumped in mysql"
         self.assertEqual(sqoop_job(), "sucessfully dumped in mysql")
 
     @mock.patch('src.connect.sqoop_job')
-    def test_hdfs_job_timeout(self, sqoop_job):
+    def test_scoop_job_timeout(self, sqoop_job):
         sqoop_job.return_value = "Connection time out"
         self.assertEqual(sqoop_job(), "Connection time out")
 
     @mock.patch('src.connect.hdfs_job')
-    def test_hdfs_job_redirects(self, sqoop_job):
+    def test_sqoop_job_redirects(self, sqoop_job):
         sqoop_job.return_value = "Too many redirects"
         self.assertEqual(sqoop_job(), "Too many redirects")
 
     @mock.patch('src.connect.hdfs_job')
-    def test_hdfs_job_critical(self, sqoop_job):
-        sqoop_job.return_value = "Critical error"
-        self.assertEqual(sqoop_job(), "Critical error")
+    def test_sqoop_job_critical(self, sqoop_job):
+        sqoop_job.return_value = "error"
+        self.assertFalse(sqoop_job(), "Critical error")
 
 
