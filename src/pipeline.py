@@ -5,7 +5,7 @@ from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.python_operator import PythonOperator
 
-from src import connect as c
+from src.connect import fetch_covid_state_data,hdfs_job,sqoop_job
 
 default_args = {
     'owner': 'airflow',
@@ -27,11 +27,11 @@ dag = DAG(dag_id='CAS',
           )
 # t1, t2 and t3 are examples of tasks created by instantiating operators
 
-t1 = PythonOperator(task_id="fetch_data", python_callable=c.fetch_covid_state_data, dag=dag)
+t1 = PythonOperator(task_id="fetch_data", python_callable=fetch_covid_state_data, dag=dag)
 
-t2 = PythonOperator(task_id="Dump_data_hdfs", python_callable=c.job(), dag=dag)
+t2 = PythonOperator(task_id="Dump_data_hdfs", python_callable=hdfs_job, dag=dag)
 
-t3 = PythonOperator(task_id="Dump_to_mysql", python_callable=c.sqoop_job(), dag=dag)
+t3 = PythonOperator(task_id="Dump_to_mysql", python_callable=sqoop_job, dag=dag)
 
 
 

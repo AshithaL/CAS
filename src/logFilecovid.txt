@@ -1,0 +1,19 @@
+2020-07-02 15:16:22 INFO-covid data
+2020-07-02 15:16:23 INFO-Request was successful
+2020-07-02 15:16:23 INFO-New csv created
+2020-07-02 15:16:29 INFO-covid data
+2020-07-02 15:16:31 INFO-Request was successful
+2020-07-02 15:16:31 INFO-New csv created
+2020-07-02 17:28:20 INFO-logs
+2020-07-02 17:28:22 INFO-Request was successful
+2020-07-02 17:28:22 INFO-New csv created
+2020-07-02 18:23:35 INFO-Request was successful
+2020-07-02 18:23:35 INFO-New csv created
+2020-07-02 18:23:36 INFO-
+2020-07-02 18:23:36 INFO-Error.
+2020-07-02 18:24:01 INFO-sucessfully dumped in mysql
+2020-07-03 13:14:20 INFO-Request was successful
+2020-07-03 13:14:20 INFO-New csv created
+2020-07-03 13:14:22 INFO-
+2020-07-03 13:14:22 INFO-Error.
+2020-07-03 13:15:13 INFO-sucessfully dumped in mysql

@@ -8,7 +8,7 @@ import yaml
 import csv
 import json
 
-# mysql configuration
+
 from src.utils.constants import YAMLPATH
 
 stream = open(YAMLPATH, 'r')
@@ -22,6 +22,12 @@ date = datetime.datetime.today().strftime('%Y-%m-%d')
 file_name = '/home/nineleaps/CAS/src/Data/data{}.csv'.format(
     datetime.datetime.today().strftime('%Y-%m-%d'))
 
+
+logging.basicConfig(filename="/home/nineleaps/CAS/src/logFilecovid.txt",
+                    filemode='a',
+                    level=logging.INFO,
+                    format='%(asctime)s %(levelname)s-%(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S')
 
 def fetch_covid_state_data():
     try:
@@ -64,15 +70,15 @@ def run_cmd(args_list):
         logging.critical('Critical error occurred during request')
         raise SystemExit(e)
 
-def job():
+def hdfs_job():
     try:
         cmd = ['hdfs', 'dfs', '-copyFromLocal', '/home/nineleaps/CAS/src/Data/data{}.csv'.format(date),
-               '/user/covid_data_2020-07-02.csv']
+               '/user/covid_data_2020-07-03.csv']
         print(cmd)
         (ret, out, err) = run_cmd(cmd)
         print(ret, out, err)
         if ret == 0:
-            logging.info('Success.')
+            logging.info('Successfuly dump data in hdfs.')
         else:
             logging.info('Error.')
     except requests.exceptions.Timeout:
@@ -95,6 +101,7 @@ def sqoop_job():
                                                                                                     db,
                                                                                                     username,
                                                                                                     password, date))
+         logging.info("sucessfully dumped in mysql")
      except requests.exceptions.Timeout:
          logging.error("Connection time out")
      except requests.exceptions.TooManyRedirects:
@@ -102,6 +109,7 @@ def sqoop_job():
      except requests.exceptions.RequestException as e:
          logging.critical('Critical error occurred during request')
          raise SystemExit(e)
-fetch_covid_state_data()
-job()
-sqoop_job()
+
+
+
+

@@ -1,0 +1,21 @@
+2020-07-02 17:25:10 INFO-logs
+2020-07-02 17:25:13 INFO-Request was successful
+2020-07-02 17:25:13 INFO-New csv created
+2020-07-02 17:25:14 INFO-
+2020-07-02 17:25:14 INFO-Error.
+2020-07-02 17:27:33 INFO-logs
+2020-07-02 17:27:34 INFO-Request was successful
+2020-07-02 17:27:34 INFO-New csv created
+2020-07-02 17:27:36 INFO-
+2020-07-02 17:27:36 INFO-Success.
+2020-07-02 18:18:15 INFO-logs
+2020-07-02 18:18:17 INFO-Request was successful
+2020-07-02 18:18:17 INFO-New csv created
+2020-07-02 18:18:19 INFO-
+2020-07-02 18:18:19 INFO-Successfuly dump data in hdfs.
+2020-07-02 18:18:44 INFO-sucessfully dumped in mysql
+2020-07-02 18:21:11 INFO-Request was successful
+2020-07-02 18:21:11 INFO-New csv created
+2020-07-02 18:21:13 INFO-
+2020-07-02 18:21:13 INFO-Error.
+2020-07-02 18:21:37 INFO-sucessfully dumped in mysql
