@@ -33,7 +33,12 @@ sudo systemctl start grafana-server
 ```
 sudo -i service elasticsearch start
 ```
--Run kibana server
+
+- Run logstash 
+```
+sudo systemctl start logstash.service
+```
+- Run kibana server
 ```
 sudo service kibana start
 ```
