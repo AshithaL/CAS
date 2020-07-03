@@ -1,4 +1,6 @@
+# This file contains the credentials of mysql
+
 'db' : 'logs'
 'table_name' : 'test'
 'username' : 'root'
-'password' : 'hello123'
+'password' : 'Qwerty@123'

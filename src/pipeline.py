@@ -5,7 +5,7 @@ from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.python_operator import PythonOperator
 
-from src.connect import fetch_covid_state_data,hdfs_job,sqoop_job
+from src.connect import fetch_covid_state_data, hdfs_job, sqoop_job
 
 default_args = {
     'owner': 'airflow',
@@ -33,8 +33,4 @@ t2 = PythonOperator(task_id="Dump_data_hdfs", python_callable=hdfs_job, dag=dag)
 
 t3 = PythonOperator(task_id="Dump_to_mysql", python_callable=sqoop_job, dag=dag)
 
-
-
-
 t1 >> t2 >> t3
-

@@ -8,7 +8,6 @@ import yaml
 import csv
 import json
 
-
 from src.utils.constants import YAMLPATH
 
 stream = open(YAMLPATH, 'r')
@@ -22,14 +21,18 @@ date = datetime.datetime.today().strftime('%Y-%m-%d')
 file_name = '/home/nineleaps/CAS/src/Data/data{}.csv'.format(
     datetime.datetime.today().strftime('%Y-%m-%d'))
 
-
 logging.basicConfig(filename="/home/nineleaps/CAS/src/logFilecovid.txt",
                     filemode='a',
                     level=logging.INFO,
                     format='%(asctime)s %(levelname)s-%(message)s',
                     datefmt='%Y-%m-%d %H:%M:%S')
 
+
 def fetch_covid_state_data():
+    """
+    this functtion is used to fetch the api data and store it in a csv file locally.
+    :return:
+    """
     try:
         req = requests.get('https://api.covidindiatracker.com/state_data.json')
         logging.info('Request was successful')
@@ -53,7 +56,9 @@ def fetch_covid_state_data():
 
 def run_cmd(args_list):
     """
-    run linux commands
+    This function is used to run linux commands
+    :param args_list:
+    :return:
     """
     try:
         print('Running system command: {0}'.format(' '.join(args_list)))
@@ -70,10 +75,16 @@ def run_cmd(args_list):
         logging.critical('Critical error occurred during request')
         raise SystemExit(e)
 
+
 def hdfs_job():
+    """
+    This function is used to dump the csv file to hadoop inside user folder
+    :return:
+    """
     try:
         cmd = ['hdfs', 'dfs', '-copyFromLocal', '/home/nineleaps/CAS/src/Data/data{}.csv'.format(date),
                '/user/covid_data_2020-07-03.csv']
+
         print(cmd)
         (ret, out, err) = run_cmd(cmd)
         print(ret, out, err)
@@ -89,27 +100,29 @@ def hdfs_job():
         logging.critical('Critical error occurred during request')
         raise SystemExit(e)
 
+
 # Create Sqoop Job
 def sqoop_job():
-     """
-     Create Sqoop job
-     """
-     try:
-         os.system(
-             "sqoop export   --table {}  --connect jdbc:mysql://localhost:3306/{}   --username {}   --password "
-             "{}   --export-dir /user/covid_data_{}.csv   --columns date,state,cases".format(table_name,
-                                                                                                    db,
-                                                                                                    username,
-                                                                                                    password, date))
-         logging.info("sucessfully dumped in mysql")
-     except requests.exceptions.Timeout:
-         logging.error("Connection time out")
-     except requests.exceptions.TooManyRedirects:
-         logging.error("Too many redirects")
-     except requests.exceptions.RequestException as e:
-         logging.critical('Critical error occurred during request')
-         raise SystemExit(e)
+    """
+    This function is used to dump the csv file data stored in hadoop to mysql table using sqoop job.
+    :return:
+    """
 
+    try:
+        os.system(
+            "sqoop export   --table {}  --connect jdbc:mysql://localhost:3306/{}   --username {}   --password "
+            "{}   --export-dir /user/covid_data_{}.csv   --columns dt,state,cases".format(table_name,
+                                                                                          db,
+                                                                                          username,
+                                                                                          password, date))
+        logging.info("sucessfully dumped in mysql")
+    except requests.exceptions.Timeout:
+        logging.error("Connection time out")
+    except requests.exceptions.TooManyRedirects:
+        logging.error("Too many redirects")
+    except requests.exceptions.RequestException as e:
+        logging.critical('Critical error occurred during request')
+        raise SystemExit(e)
 
 
 
