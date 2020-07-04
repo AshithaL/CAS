@@ -1,5 +1,5 @@
 # CAS
-CAS(Covid Analysis Service) collects data and generates reports based on the covid data. The report contains information on COVID-19 cases such as cases per state and also analyzing the data. 
+CAS(Covid Analysis Service) collects data and generates reports based on the covid data. The report contains information on COVID-19 cases such as cases per state and also analyzing the data using tools grafana and analysing logs as well using kibana.
 
 # Prerequisites
 
@@ -18,6 +18,8 @@ airflow
 python3 src/connect.py
 ```
 -This file will run all the functions required. Like to fetch the data from the API and store it in a csv file. Then dump the csv file to hadoop and from there dump the hadoop data to mysql database tables.
+Here is a DOC file to install all the tools 
+https://docs.google.com/document/d/1dKXCGK5NdijWqeEdJ92Ysd1qD3mk-OKmA8TwJ7qkWcs/edit
 
 -start grafana server
 ```
