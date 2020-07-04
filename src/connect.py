@@ -83,7 +83,7 @@ def hdfs_job():
     """
     try:
         cmd = ['hdfs', 'dfs', '-copyFromLocal', '/home/nineleaps/CAS/src/Data/data{}.csv'.format(date),
-               '/user/covid_data_2020-07-03.csv']
+               '/user/covid_data_2020-07-04.csv']
 
         print(cmd)
         (ret, out, err) = run_cmd(cmd)
