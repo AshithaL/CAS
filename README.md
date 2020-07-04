@@ -44,5 +44,12 @@ sudo systemctl start logstash.service
 ```
 sudo service kibana start
 ```
+Setup for Running test cases
+---
+```
+For running test cases
+    -> coverage run -m pytest
+For coverage result
+    ->  coverage report -m 
 
 
